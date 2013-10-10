@@ -1,4 +1,4 @@
-require './mailchimp_config'
+require './lib/mailchimp_config'
 
 class MailChimpList < MailChimpConfig
 
