@@ -1,5 +1,7 @@
+require './mailchimp_config'
+
 class MailChimpList < MailChimpConfig
-  
+
   def subscribe list_id, email, merge_vars={}
     mailchimp.list_subscribe(
       :id => list_id,
