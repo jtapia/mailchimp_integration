@@ -1,0 +1,34 @@
+{
+  "name": "mailchimp",
+  "display": "MailChimp",
+  "description": "Automatically subscribe user to MailChimp mailing list on certain events",
+  "help": "http://guides.spreecommerce.com/integration/endpoints/mailchimp",
+  "icon_url": "mailchimp.png",
+  "services":
+    [
+      {
+        "name": "completed_order",
+        "path": "/subscribe",
+        "description": "Subscribe to mailing list on completed order",
+        "requires":
+          {
+            "parameters":
+              [
+                {
+                  "name": "api_key",
+                  "description": "MailChimp API key"
+                },
+                {
+                  "name": "list_id",
+                  "description": "MailChimp List identifier"
+                }
+              ]
+          },
+        "recommends": 
+          {
+            "messages": [ "order:new" ]
+          },
+        "produces": {}
+      }
+    ]
+}
