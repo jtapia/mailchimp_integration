@@ -4,8 +4,10 @@ describe MailChimpList do
   subject { described_class.new(Factories.api_key) }
 
   it '#subscribe calls list_subscribe on MailChimp::API instance' do
-    Mailchimp::API.any_instance.should_receive(:list_subscribe)
-    subject.subscribe('123', 'andrei@spreecommerce.com')
+    VCR.use_cassette('processor_subscribe_success') do
+      Mailchimp::API.any_instance.should_receive(:list_subscribe)
+      subject.subscribe('123', 'andrei@spreecommerce.com')
+    end
   end
 
   it 'return TRUE when' do

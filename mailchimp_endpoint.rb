@@ -9,7 +9,7 @@ class MailChimpEndpoint < EndpointBase
       response = Processor.subscribe_to_list(api_key, list_id, email, merge_vars)
     rescue => e
       code = 500
-      response = error_notification(e)
+      response = e.error_notification
     end
     process_result code, base_msg.merge(response)
   end
@@ -48,18 +48,6 @@ class MailChimpEndpoint < EndpointBase
       'message_id' => message_id,
       'email' => email,
       'list_id' => list_id
-    }
-  end
-
-  def error_notification(e)
-    { notifications:
-      [
-        {
-          level: "error",
-          subject: e.message,
-          description: e.backtrace.to_a.join('\n\t')
-        }
-      ]
     }
   end
 end

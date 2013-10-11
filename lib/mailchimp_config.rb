@@ -1,3 +1,5 @@
+require './lib/errors'
+
 class MailChimpConfig
   attr_accessor :api_key, :mailchimp
 
@@ -12,5 +14,3 @@ class MailChimpConfig
     raise AuthorizationError, "API key must be provided" if (api_key.nil? or api_key.empty?)
   end
 end
-
-class AuthorizationError < StandardError; end

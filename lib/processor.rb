@@ -8,8 +8,8 @@ class Processor
       self.success_notification(email)
     elsif (result.class == Hash) and (result["code"] == 214)
       self.success_notification(email)
-    else 
-      self.process_error result
+    else
+      raise MailChimpError.new(result)
     end
   end
 
@@ -21,18 +21,6 @@ class Processor
           level: "info",
           subject: "Successfully Subscribed #{email} To The MailChimp List",
           description: "Successfully Subscribed #{email} To The MailChimp List"
-        }
-      ]
-    }
-  end
-
-  def self.process_error error_hash
-    { notifications:
-      [
-        {
-          level: "error",
-          subject: "MailChimp Error Code #{error_hash['code']}",
-          description: error_hash["error"]
         }
       ]
     }

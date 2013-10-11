@@ -13,24 +13,20 @@ describe Processor do
       response.should be_kind_of(Hash)
       response.should have_key(:notifications)
       response[:notifications].first[:level].should eq("info")
-      response[:notifications].first.should have_key(:subject)
-      response[:notifications].first.should have_key(:description)
+      response[:notifications].first[:subject].should match("Successfully Subscribed")
+      response[:notifications].first[:description].should match("Successfully Subscribed")
     end
   end
 
   it '#subscribe_to_list returns error notification' do
     VCR.use_cassette('processor_subscribe_invalid_email') do
-      response = described_class.subscribe_to_list(
-        Factories.api_key,
-        Factories.list_id,
-        "andrei@spreecommerce.com"
-      )
-
-      response.should be_kind_of(Hash)
-      response.should have_key(:notifications)
-      response[:notifications].first[:level].should eq("error")
-      response[:notifications].first.should have_key(:subject)
-      response[:notifications].first.should have_key(:description)
+      expect {  
+        response = described_class.subscribe_to_list(
+          Factories.api_key,
+          Factories.list_id,
+          "andrei@spreecommerce.com"
+        )
+      }.to raise_error MailChimpError
     end
   end
 
@@ -45,8 +41,8 @@ describe Processor do
       response.should be_kind_of(Hash)
       response.should have_key(:notifications)
       response[:notifications].first[:level].should eq("info")
-      response[:notifications].first.should have_key(:subject)
-      response[:notifications].first.should have_key(:description)
+      response[:notifications].first[:subject].should match("Successfully Subscribed")
+      response[:notifications].first[:description].should match("Successfully Subscribed")
     end
   end
 end

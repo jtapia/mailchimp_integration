@@ -58,7 +58,7 @@ describe MailChimpEndpoint do
     VCR.use_cassette('processor_subscribe_invalid_email') do
       post '/subscribe', message.to_json, auth
 
-      last_response.status.should eq(200)
+      last_response.status.should eq(500)
 
       last_response.body.should match("message_id")
       last_response.body.should match("email")
