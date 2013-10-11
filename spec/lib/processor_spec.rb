@@ -5,8 +5,8 @@ describe Processor do
   it '#subscribe_to_list returns success notification' do
     VCR.use_cassette('processor_subscribe_success') do
       response = described_class.subscribe_to_list(
-        Factories.config.first['value'],
-        Factories.config.last['value'],
+        Factories.api_key,
+        Factories.list_id,
         "andrei@spreecommerce.com"
       )
 
@@ -21,8 +21,8 @@ describe Processor do
   it '#subscribe_to_list returns error notification' do
     VCR.use_cassette('processor_subscribe_invalid_email') do
       response = described_class.subscribe_to_list(
-        Factories.config.first['value'],
-        Factories.config.last['value'],
+        Factories.api_key,
+        Factories.list_id,
         "andrei@spreecommerce.com"
       )
 
@@ -37,8 +37,8 @@ describe Processor do
   it '#subscribe_to_list returns success notification' do
     VCR.use_cassette('processor_subscribe_invalid_already_subscribed') do
       response = described_class.subscribe_to_list(
-        Factories.config.first['value'],
-        Factories.config.last['value'],
+        Factories.api_key,
+        Factories.list_id,
         "andrei@spreecommerce.com"
       )
 

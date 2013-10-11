@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe MailChimpList do
-  subject { described_class.new('448fda9e4c6b13366736ed6646a7fc6d-us7') }
+  subject { described_class.new(Factories.api_key) }
 
   it '#subscribe calls list_subscribe on MailChimp::API instance' do
     Mailchimp::API.any_instance.should_receive(:list_subscribe)

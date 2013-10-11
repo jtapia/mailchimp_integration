@@ -1,10 +1,18 @@
 module Factories
   class << self
 
+    def api_key
+      '448fda9e4c6b13366736ed6646a7fc6d-us7'
+    end
+
+    def list_id
+      '57b21e6f29'
+    end
+
     def config(args={})
       [
-        { 'name' => 'mailchimp.api_key', 'value' => '448fda9e4c6b13366736ed6646a7fc6d-us7' },
-        { 'name' => 'mailchimp.list_id', 'value' => '57b21e6f29' }
+        { 'name' => 'mailchimp.api_key', 'value' => api_key },
+        { 'name' => 'mailchimp.list_id', 'value' => list_id }
       ]
     end
 

@@ -21,12 +21,12 @@ describe MailChimpEndpoint do
   it 'subscribes new email to a MailChimp list' do
     VCR.use_cassette('processor_subscribe_success') do
       Processor.should_receive(:subscribe_to_list)
-        .with( Factories.config.first['value'], Factories.config.last['value'], Factories.order['email'], anything )
+        .with( Factories.api_key, Factories.list_id, Factories.order['email'], anything )
         .and_return( Processor.success_notification Factories.order['email'] )
 
       post '/subscribe', message.to_json, auth
 
-      last_response.status.should == 200
+      last_response.status.should eq(200)
 
       last_response.body.should match("message_id")
       last_response.body.should match("email")
@@ -39,12 +39,12 @@ describe MailChimpEndpoint do
   it 'succeeds if email is already subscribed' do
     VCR.use_cassette('processor_subscribe_invalid_already_subscribed') do
       Processor.should_receive(:subscribe_to_list)
-        .with( Factories.config.first['value'], Factories.config.last['value'], Factories.order['email'], anything )
+        .with( Factories.api_key, Factories.list_id, Factories.order['email'], anything )
         .and_return( Processor.success_notification Factories.order['email'] )
 
       post '/subscribe', message.to_json, auth
 
-      last_response.status.should == 200
+      last_response.status.should eq(200)
 
       last_response.body.should match("message_id")
       last_response.body.should match("email")
@@ -58,7 +58,7 @@ describe MailChimpEndpoint do
     VCR.use_cassette('processor_subscribe_invalid_email') do
       post '/subscribe', message.to_json, auth
 
-      last_response.status.should == 200
+      last_response.status.should eq(200)
 
       last_response.body.should match("message_id")
       last_response.body.should match("email")
