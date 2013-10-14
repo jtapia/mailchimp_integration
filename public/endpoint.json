@@ -2,7 +2,7 @@
   "name": "mailchimp",
   "display": "MailChimp",
   "description": "Automatically subscribe user to MailChimp mailing list on certain events",
-  "help": "http://guides.spreecommerce.com/integration/endpoints/mailchimp",
+  "help": "http://guides.spreecommerce.com/integration/mailchimp_integration.html",
   "icon_url": "mailchimp.png",
   "services":
     [
