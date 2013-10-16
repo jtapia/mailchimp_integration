@@ -13,8 +13,8 @@ describe Processor do
       response.should be_kind_of(Hash)
       response.should have_key(:notifications)
       response[:notifications].first[:level].should eq("info")
-      response[:notifications].first[:subject].should match("Successfully Subscribed")
-      response[:notifications].first[:description].should match("Successfully Subscribed")
+      response[:notifications].first[:subject].should match("Successfully subscribed")
+      response[:notifications].first[:description].should match("Successfully subscribed")
     end
   end
 
@@ -41,8 +41,8 @@ describe Processor do
       response.should be_kind_of(Hash)
       response.should have_key(:notifications)
       response[:notifications].first[:level].should eq("info")
-      response[:notifications].first[:subject].should match("Successfully Subscribed")
-      response[:notifications].first[:description].should match("Successfully Subscribed")
+      response[:notifications].first[:subject].should match("Successfully subscribed")
+      response[:notifications].first[:description].should match("Successfully subscribed")
     end
   end
 end

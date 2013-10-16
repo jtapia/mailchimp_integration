@@ -11,7 +11,7 @@ describe MailChimpError do
   it '#error_notification returns correct hash/structure' do
     subject.error_notification.should have_key(:notifications)
     subject.error_notification[:notifications].first[:level].should eq("error")
-    subject.error_notification[:notifications].first[:subject].should eq("MailChimp Error Code #{subject.code}")
+    subject.error_notification[:notifications].first[:subject].should eq("MailChimp Error Code: #{subject.code}")
     subject.error_notification[:notifications].first[:description].should eq(subject.msg)
   end
 end

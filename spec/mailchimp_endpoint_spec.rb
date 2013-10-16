@@ -32,7 +32,7 @@ describe MailChimpEndpoint do
       last_response.body.should match("email")
       last_response.body.should match("list_id")
       last_response.body.should match("notifications")
-      last_response.body.should match("Successfully Subscribed")
+      last_response.body.should match("Successfully subscribed")
     end
   end
 
@@ -50,7 +50,7 @@ describe MailChimpEndpoint do
       last_response.body.should match("email")
       last_response.body.should match("list_id")
       last_response.body.should match("notifications")
-      last_response.body.should match("Successfully Subscribed")
+      last_response.body.should match("Successfully subscribed")
     end
   end
 

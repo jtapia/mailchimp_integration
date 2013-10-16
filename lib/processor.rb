@@ -19,8 +19,8 @@ class Processor
       [
         {
           level: "info",
-          subject: "Successfully Subscribed #{email} To The MailChimp List",
-          description: "Successfully Subscribed #{email} To The MailChimp List"
+          subject: "Successfully subscribed #{email} to the MailChimp list",
+          description: "Successfully subscribed #{email} to the MailChimp list"
         }
       ]
     }
