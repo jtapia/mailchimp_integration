@@ -5,24 +5,36 @@ class Processor
     result = mailchimp_list.subscribe(list_id, email, merge_vars)
 
     if result == true
-      self.success_notification(email)
+      self.info_notification( success_msg(email) )
     elsif (result.class == Hash) and (result["code"] == 214)
-      self.success_notification(email)
+      self.info_notification( already_subscribed_msg(email) )
     else
       raise MailChimpError.new(result)
     end
   end
 
   private
-  def self.success_notification email
+  def self.info_notification msg
     { notifications:
       [
         {
-          level: "info",
-          subject: "Successfully subscribed #{email} to the MailChimp list",
-          description: "Successfully subscribed #{email} to the MailChimp list"
-        }
+          level: "info"
+        }.merge(msg)
       ]
+    }
+  end
+
+  def self.success_msg email
+    {
+      subject: "Successfully subscribed #{email} to the MailChimp list",
+      description: "Successfully subscribed #{email} to the MailChimp list"
+    }
+  end
+
+  def self.already_subscribed_msg email
+    {
+      subject: "#{email} is already subscribed to the MailChimp list",
+      description: "#{email} is already subscribed to the MailChimp list"
     }
   end
 end 

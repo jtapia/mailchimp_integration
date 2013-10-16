@@ -14,8 +14,8 @@ class MailChimpError < StandardError
       [
         {
           level: "error",
-          subject: "MailChimp Error Code: #{@code}",
-          description: @msg
+          subject: "MailChimp Error Code: #{code}",
+          description: msg
         }
       ]
     }
