@@ -16,11 +16,13 @@
               [
                 {
                   "name": "api_key",
-                  "description": "MailChimp API key"
+                  "description": "MailChimp API key",
+                  "data_type": "string"
                 },
                 {
                   "name": "list_id",
-                  "description": "MailChimp List identifier"
+                  "description": "MailChimp List identifier",
+                  "data_type": "string"
                 }
               ]
           },
