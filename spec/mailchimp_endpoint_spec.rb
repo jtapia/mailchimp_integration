@@ -67,4 +67,20 @@ describe MailChimpEndpoint do
       last_response.body.should match("Invalid Email Address")
     end
   end
+
+  context "banned email" do
+    let(:email) { "etwaun@yahoo.coom" }
+
+    it "returns 200 with notification error message" do
+      message['payload']['order']['email'] = "etwaun@yahoo.coom"
+
+      VCR.use_cassette('processor_subscribe_banned_email') do
+        post '/subscribe', message.to_json, auth
+
+        expect(last_response.status).to eq 200
+        expect(last_response.body).to match "notifications"
+        expect(last_response.body).to match "error"
+      end
+    end
+  end
 end

@@ -6,14 +6,28 @@ class Processor
 
     if result == true
       self.info_notification( success_msg(email) )
-    elsif (result.class == Hash) and (result["code"] == 214)
+    elsif (result.class == Hash) && (result["code"] == 214)
       self.info_notification( already_subscribed_msg(email) )
+    elsif (result.class == Hash) && (result["code"] == 220)
+      self.banned_notification result
     else
       raise MailChimpError.new(result)
     end
   end
 
   private
+  def self.banned_notification(result)
+    { notifications:
+      [
+        {
+          level: "error",
+          subject: "MailChimp Error Code: #{result["code"]}",
+          description: result["error"]
+        }
+      ]
+    }
+  end
+
   def self.info_notification msg
     { notifications:
       [
@@ -37,4 +51,4 @@ class Processor
       description: "#{email} is already subscribed to the MailChimp list"
     }
   end
-end 
+end
