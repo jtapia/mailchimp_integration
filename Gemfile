@@ -23,4 +23,4 @@ group :production do
   gem 'unicorn'
 end
 
-gem 'endpoint_base', git: 'git@github.com:spree/endpoint_base.git', branch: 'v5'
+gem 'endpoint_base', git: 'git@github.com:spree/endpoint_base.git'
