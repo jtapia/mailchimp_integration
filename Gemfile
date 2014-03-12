@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 gem 'capistrano'
 gem 'mailchimp'
+gem 'sinatra'
+gem 'tilt', '~> 1.4.1'
+gem 'tilt-jbuilder', require: 'sinatra/jbuilder'
 
 group :development do
   gem 'pry'

@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+require 'spree/testing_support/controllers'
 
 Bundler.require(:default, :test)
 
@@ -19,6 +20,7 @@ end
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
+  config.include Spree::TestingSupport::Controllers
 end
 
 ENV['ENDPOINT_KEY'] = 'x123'

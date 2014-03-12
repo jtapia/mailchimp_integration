@@ -1,17 +1,28 @@
 Dir['./lib/**/*.rb'].each(&method(:require))
 
-class MailChimpEndpoint < EndpointBase
+class MailChimpEndpoint < EndpointBase::Sinatra::Base
   set :logging, true
 
-  post '/subscribe' do
+  post '/add_to_list' do
     begin
       code = 200
-      response = Processor.subscribe_to_list(api_key, list_id, email, merge_vars)
+      mailchimp_list = MailChimpList.new(api_key)
+      result = mailchimp_list.subscribe(list_id, email, merge_vars)
+      if result == true
+        set_summary "Successfully subscribed #{email} to the MailChimp list"
+      elsif (result.class == Hash) && (result["code"] == 214)
+        set_summary "#{email} is already subscribed to the MailChimp list"
+      elsif (result.class == Hash) && (result["code"] == 220)
+        set_summary "Mailchimp Error Code: #{result["code"]} - #{result["error"]}"
+      else
+        raise MailChimpError.new(result)
+      end
+
     rescue => e
       code = 500
-      response = e.error_notification
+      set_summary e.error_notification
     end
-    process_result code, base_msg.merge(response)
+    process_result code
   end
 
   private
