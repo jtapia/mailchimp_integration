@@ -1,6 +1,4 @@
-require './lib/mailchimp_config'
-
-class MailChimpList < MailChimpConfig
+class MailChimpList
 
   def subscribe list_id, email, merge_vars={}
     mailchimp.list_subscribe(
