@@ -1,8 +1,8 @@
 GIT
-  remote: git@github.com:spree/endpoint_base.git
-  revision: 39db55f1e844f96638b7155a948846e822f6d03c
+  remote: git://github.com/spree/endpoint_base.git
+  revision: fefcdcb520559534584945885ed8b7e28dffc437
   specs:
-    endpoint_base (0.1.1)
+    endpoint_base (0.3)
       activesupport
       jbuilder
       json
