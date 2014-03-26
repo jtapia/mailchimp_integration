@@ -47,7 +47,7 @@ class MailChimpEndpoint < EndpointBase::Sinatra::Base
   end
 
   def api_key
-    @config['mailchimp.api_key']
+    @config['mailchimp_api_key']
   end
 
   def merge_vars
