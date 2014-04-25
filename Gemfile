@@ -28,3 +28,4 @@ group :production do
 end
 
 gem 'endpoint_base', github: 'spree/endpoint_base'
+gem 'honeybadger'
