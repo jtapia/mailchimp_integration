@@ -1,11 +1,15 @@
 source 'https://rubygems.org'
 
+gem 'activesupport'
 gem 'capistrano'
-gem 'mailchimp'
+gem 'honeybadger'
+gem 'mailchimp-api', require: 'mailchimp'
 gem 'sinatra'
 gem 'tilt', '~> 1.4.1'
 gem 'tilt-jbuilder', require: 'sinatra/jbuilder'
-gem 'activesupport'
+
+# Must come after sinatra
+gem 'endpoint_base', github: 'spree/endpoint_base'
 
 group :development do
   gem 'pry'
@@ -26,6 +30,3 @@ group :production do
   gem 'foreman'
   gem 'unicorn'
 end
-
-gem 'endpoint_base', github: 'spree/endpoint_base'
-gem 'honeybadger'

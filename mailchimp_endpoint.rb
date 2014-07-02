@@ -3,39 +3,37 @@ Dir['./lib/**/*.rb'].each(&method(:require))
 class MailChimpEndpoint < EndpointBase::Sinatra::Base
   set :logging, true
 
+  configure :development do
+    enable :logging, :dump_errors, :raise_errors
+    log = File.new("tmp/sinatra.log", "a")
+    STDOUT.reopen(log)
+    STDERR.reopen(log)
+  end
+
   Honeybadger.configure do |config|
     config.api_key = ENV['HONEYBADGER_KEY']
     config.environment_name = ENV['RACK_ENV']
   end
 
   post '/add_to_list' do
-    result = subscribe(api_key, list_id, email, merge_vars)
-    if result == true
-      set_summary "Successfully subscribed #{email} to the MailChimp list"
-    elsif (result.class == Hash) && (result["code"] == 214)
-      set_summary "#{email} is already subscribed to the MailChimp list"
-    elsif (result.class == Hash) && (result["code"] == 220)
-      set_summary "Mailchimp Error Code: #{result["code"]} - #{result["error"]}"
-    else
-      set_summary "Mailchimp Error Code: #{result.inspect}"
+    mailchimp = Mailchimp::API.new(api_key)
+
+    begin
+      if list_id.is_a?(Array)
+        list_id.each do |list|
+          mailchimp.lists.subscribe(list, { email: email }, merge_vars, 'html', false, true, false, false)
+        end
+      else
+        mailchimp.lists.subscribe(list_id, { email: email }, merge_vars, 'html', false, true, false, false)
+      end
+    rescue => ex
+      result 500, ex.message and return
     end
 
-    process_result 200
+    result 200, "Successfully subscribed #{email} to the MailChimp list(s)"
   end
 
   private
-
-  def subscribe api_key, list_id, email, merge_vars={}
-    mailchimp = Mailchimp::API.new(api_key, :timeout => 60)
-
-    mailchimp.list_subscribe(
-      :id => list_id,
-      :email_address => email,
-      :merge_vars => merge_vars,
-      :send_welcome => false,
-      :double_optin => false
-    )
-  end
 
   def email
     @payload['member']['email']
@@ -50,7 +48,10 @@ class MailChimpEndpoint < EndpointBase::Sinatra::Base
   end
 
   def merge_vars
-      @payload['member'].except!("email")
+    {
+      fname: @payload['member']['first_name'],
+      lname: @payload['member']['last_name']
+    }.merge(@payload['member'].except(*["email", "first_name", "last_name"]))
   end
 
   def message_id
