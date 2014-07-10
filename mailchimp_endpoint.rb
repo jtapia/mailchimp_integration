@@ -5,9 +5,6 @@ class MailChimpEndpoint < EndpointBase::Sinatra::Base
 
   configure :development do
     enable :logging, :dump_errors, :raise_errors
-    log = File.new("tmp/sinatra.log", "a")
-    STDOUT.reopen(log)
-    STDERR.reopen(log)
   end
 
   Honeybadger.configure do |config|
@@ -16,16 +13,10 @@ class MailChimpEndpoint < EndpointBase::Sinatra::Base
   end
 
   post '/add_to_list' do
-    mailchimp = Mailchimp::API.new(api_key)
-
     begin
-      if list_id.is_a?(Array)
-        list_id.each do |list|
-          mailchimp.lists.subscribe(list, { email: email }, merge_vars, 'html', false, true, false, false)
-        end
-      else
-        mailchimp.lists.subscribe(list_id, { email: email }, merge_vars, 'html', false, true, false, false)
-      end
+      mailchimp = Mailchimp::API.new(api_key)
+
+      list_ids.each {|list_id| subscribe(mailchimp, list_id)}
     rescue => ex
       result 500, ex.message and return
     end
@@ -39,8 +30,8 @@ class MailChimpEndpoint < EndpointBase::Sinatra::Base
     @payload['member']['email']
   end
 
-  def list_id
-    @payload['list_id']
+  def list_ids
+    Array(@payload['list_id'] || @payload['member']['list_id'])
   end
 
   def api_key
@@ -56,5 +47,9 @@ class MailChimpEndpoint < EndpointBase::Sinatra::Base
 
   def message_id
     @message[:message_id]
+  end
+
+  def subscribe(mailchimp, list_id)
+    mailchimp.lists.subscribe(list_id, { email: email }, merge_vars, 'html', false, true, false, false)
   end
 end

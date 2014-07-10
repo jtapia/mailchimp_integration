@@ -2,31 +2,37 @@
 http_interactions:
 - request:
     method: post
-    uri: https://us5.api.mailchimp.com/1.3/?method=listSubscribe
+    uri: https://api.mailchimp.com/2.0/lists/subscribe.json
     body:
       encoding: UTF-8
-      string: '%7B%22apikey%22%3A%abc123-us5%22%2C%22id%22%3A%22abc123%22%2C%22email_address%22%3A%22support%40spreecommerce.com%22%2C%22merge_vars%22%3A%7B%22first_name%22%3A%22Spree%22%2C%22last_name%22%3A%22Commerce%22%7D%2C%22send_welcome%22%3Afalse%2C%22double_optin%22%3Afalse%7D'
-    headers: {}
+      string: '{"id":"a5b08674ef","email":{"email":"support@spreecommerce.com"},"merge_vars":{"fname":"Spree","lname":"Commerce"},"email_type":"html","double_optin":false,"update_existing":true,"replace_interests":false,"send_welcome":false,"apikey":"------------------------------------"}'
+    headers:
+      User-Agent:
+      - excon/0.37.0
+      Content-Type:
+      - application/json
   response:
     status:
       code: 200
-      message: OK
+      message: ''
     headers:
       Server:
       - nginx
-      Date:
-      - Fri, 14 Mar 2014 14:51:07 GMT
       Content-Type:
-      - application/json
+      - application/json; charset=utf-8
       Content-Length:
-      - '4'
+      - '76'
+      Vary:
+      - Accept-Encoding
+      Date:
+      - Thu, 10 Jul 2014 19:59:12 GMT
       Connection:
-      - keep-alive
+      - close
       Set-Cookie:
       - _AVESTA_ENVIRONMENT=prod; path=/
     body:
       encoding: UTF-8
-      string: 'true'
-    http_version: 
-  recorded_at: Fri, 14 Mar 2014 14:51:07 GMT
+      string: '{"email":"support@spreecommerce.com","euid":"282dd2e5a7","leid":"178017493"}'
+    http_version:
+  recorded_at: Thu, 10 Jul 2014 19:59:12 GMT
 recorded_with: VCR 2.4.0
