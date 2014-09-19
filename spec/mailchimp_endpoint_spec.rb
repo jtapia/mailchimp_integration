@@ -52,4 +52,30 @@ describe MailChimpEndpoint do
       end
     end
   end
+
+  context 'update_member in a list_id is in root' do
+    let(:payload) {
+      '{"request_id": "12e12341523e449c3000001",
+        "parameters": {
+          "mailchimp_api_key":"apikey"
+        },
+        "list_id":"a5b08674ef",
+        "member": {
+          "email": "support@spreecommerce.com",
+          "first_name": "Spree",
+          "last_name": "Commerce"
+        }
+      }'
+    }
+
+    it "should respond to POST update_member" do
+      VCR.use_cassette('mailchimp_update') do
+        post '/update_member', payload, auth
+
+        expect(last_response.status).to eql 200
+        expect(json_response["request_id"]).to eql "12e12341523e449c3000001"
+        expect(json_response["summary"]).to match /Successfully updated/
+      end
+    end
+  end
 end

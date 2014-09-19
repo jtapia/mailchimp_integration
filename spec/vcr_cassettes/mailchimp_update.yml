@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mailchimp.com/2.0/lists/update-member.json
+    body:
+      encoding: UTF-8
+      string: '{"id":"a5b08674ef","email":{"email":"support@spreecommerce.com"},"merge_vars":{"new-email":"support1@spreecommerce.com"},"email_type":"html","replace_interests":true,"apikey":"------------------------------------"}'
+    headers:
+      User-Agent:
+      - excon/0.37.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '76'
+      Vary:
+      - Accept-Encoding
+      Date:
+      - Thu, 10 Jul 2014 19:59:12 GMT
+      Connection:
+      - close
+      Set-Cookie:
+      - _AVESTA_ENVIRONMENT=prod; path=/
+    body:
+      encoding: UTF-8
+      string: '{"email":"support1@spreecommerce.com","euid":"282dd2e5a7","leid":"178017493"}'
+    http_version:
+  recorded_at: Thu, 10 Jul 2014 19:59:12 GMT
+recorded_with: VCR 2.4.0
